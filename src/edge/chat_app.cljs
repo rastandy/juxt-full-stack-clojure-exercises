@@ -42,32 +42,7 @@
         [:tbody
          (map-indexed (fn [idx message]
                         [:tr {:key idx} [:td message]])
-                      (:messages state))]]
-
-       (when-let [[id entry] (:current state)]
-         [:div.container
-          [:h3 (:firstname entry) " " (:surname entry)]
-          [:form
-           {:on-submit (fn [ev] (.preventDefault ev))}
-           [:p
-            [:label "Id"]
-            [:input {:type "text"
-                     :disabled true
-                     :value id}]]
-           (for [[k label] [[:firstname "Firstname"]
-                            [:surname "Surname"]
-                            [:phone "Phone"]]]
-             ^{:key (keyword "field" k)}
-             [:p
-              [:label label]
-              [:input {:type "text"
-                       :value (get entry k)
-                       :on-change (changer [:current 1 k])}]])
-
-           [:button {:disabled (not (needs-saving? state))
-                     :on-click (fn [ev] (save-entry state))} "Save"]
-
-           [:button {:on-click (fn [ev] (delete-entry state))} "Delete"]]])])))
+                      (:messages state))]]])))
 
 (defn init [section]
   ;; (get-chat-data)

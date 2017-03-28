@@ -31,11 +31,8 @@
     {:get
      {:produces "text/html"
       :response
-      (fn [ctx] (selmer/render-file
-                 "chat-app.html"
-                 {:title "Edge Chat app"
-                  :ctx ctx
-                  }))}}}))
+      (fn [ctx] (selmer/render-file "chat-app.html"
+                                    {:title "Edge Chat app" :ctx ctx}))}}}))
 
 (defn chat-routes [events]
   ["/" [["chat-app" (chat-app)]

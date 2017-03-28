@@ -64,7 +64,7 @@
   (system/config :dev))
 
 (defmethod aero.core/reader 'dice-roll [{:keys [profile] :as opts} tag value]
-  (rand))
+  (rand-int 10))
 
 (d/create-database "datomic:mem://training")
 
