@@ -85,5 +85,5 @@
 (defn all-datomic-relations []
  (d/q '[:find [(pull ?e [*]) ...]
         :where
-        [?e :db/ident  _]]
+        [?e :db/ident]]
       (d/db conn)))
