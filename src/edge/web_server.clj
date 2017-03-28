@@ -1,4 +1,4 @@
-;; Copyright © 2016, JUXT LTD.
+;; Copyright © 2016, 2017, JUXT LTD.
 
 (ns edge.web-server
   (:require
@@ -12,6 +12,7 @@
    [edge.phonebook :refer [phonebook-routes]]
    [edge.phonebook-app :refer [phonebook-app-routes]]
    [edge.hello :refer [hello-routes other-hello-routes]]
+   [edge.chat :refer [chat-routes]]
    [edge.security-demo :refer [security-demo-routes]]
    [schema.core :as s]
    [selmer.parser :as selmer]
@@ -47,8 +48,9 @@
    [
     ;; Hello World!
     (hello-routes)
+    ;; ["/chat" (yada/as-resource {:fruit "apple"})]
     (other-hello-routes)
-
+    (chat-routes (:events config))
     (phonebook-routes db config)
     (phonebook-app-routes db config)
 
@@ -115,7 +117,9 @@
   (start [component]
     (if listener
       component ; idempotence
-      (let [vhosts-model (vhosts-model [{:scheme :http :host host} (routes db {:port port})])
+      (let [vhosts-model (vhosts-model [{:scheme :http :host host}
+                                        (routes db {:port port
+                                                    :events (:events component)})])
             listener (yada/listener vhosts-model {:port port})]
         (infof "Started web-server on port %s" (:port listener))
         (assoc component :listener listener))))

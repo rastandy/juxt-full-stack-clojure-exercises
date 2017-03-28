@@ -1,4 +1,4 @@
-;; Copyright © 2016, JUXT LTD.
+;; Copyright © 2016, 2017, JUXT LTD.
 
 (ns user
   (:require
@@ -13,7 +13,11 @@
    [edge.system :as system]
    [reloaded.repl :refer [system init start stop go reset reset-all]]
    [schema.core :as s]
-   [yada.test :refer [response-for]]))
+   [yada.test :refer [response-for]]
+   [datomic.api :as d]
+   [manifold.bus :as bus]
+   [manifold.stream :as ms]
+   [clojure.tools.logging :as log]))
 
 (defn new-dev-system
   "Create a development system"
@@ -55,3 +59,19 @@
         (start-repl))))
 
 ;; REPL Convenience helpers
+
+(defn dev-config []
+  (system/config :dev))
+
+(defmethod aero.core/reader 'dice-roll [{:keys [profile] :as opts} tag value]
+  (rand))
+
+(def conn (d/connect "datomic:mem://training"))
+
+;; (defn chat [message]
+;;   (d/transact conn [{:chat/message message}]))
+
+(defn all-chat-messages []
+  (d/q '[:find [(pull ?e [:chat/message]) ...]
+         :where [?e :chat/message]]
+       (d/db conn)))
