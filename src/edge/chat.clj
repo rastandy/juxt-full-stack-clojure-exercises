@@ -38,6 +38,6 @@
                   }))}}}))
 
 (defn chat-routes [events]
-  ["" [["/chat-app" (chat-app)]
-       ["/chat" [["/form" (chat-form events)]
+  ["/" [["chat-app" (chat-app)]
+        ["chat" [["/form" (chat-form events)]
                  ["/messages" (chat-messages events)]]]]])
