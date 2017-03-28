@@ -25,9 +25,6 @@
 (defn get-events-bus [events-component]
   (-> events-component :bus))
 
-(defn chat-messages-stream [events-component]
-  (bus/subscribe (get-events-bus events-component) :chat))
-
 (defn publish [events-component event topic]
   (bus/publish! (get-events-bus events-component) topic event))
 

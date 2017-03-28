@@ -22,7 +22,7 @@
     {:get {:produces #{"text/event-stream"}
            :response (fn [ctx]
                        (->> (e/subscribe events)
-                            (ms/map #(format "data: %s\n\n" (pr-str %)))))}}}))
+                            (ms/map #(format "data: %s\n\n" (str %)))))}}}))
 
 (defn chat-app []
   (yada/resource
