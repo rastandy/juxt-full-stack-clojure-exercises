@@ -70,6 +70,10 @@
 
 (def conn (d/connect "datomic:mem://training"))
 
+(d/transact conn [{:db/ident :chat/message
+                   :db/valueType :db.type/string
+                   :db/cardinality :db.cardinality/one}])
+
 (defn chat [message]
   (d/transact conn [{:chat/message message}]))
 
@@ -77,3 +81,9 @@
   (d/q '[:find [(pull ?e [:chat/message]) ...]
          :where [?e :chat/message]]
        (d/db conn)))
+
+(defn all-datomic-relations []
+ (d/q '[:find [(pull ?e [*]) ...]
+        :where
+        [?e :db/ident  _]]
+      (d/db conn)))
