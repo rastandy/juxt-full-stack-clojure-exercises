@@ -66,10 +66,12 @@
 (defmethod aero.core/reader 'dice-roll [{:keys [profile] :as opts} tag value]
   (rand))
 
+(d/create-database "datomic:mem://training")
+
 (def conn (d/connect "datomic:mem://training"))
 
-;; (defn chat [message]
-;;   (d/transact conn [{:chat/message message}]))
+(defn chat [message]
+  (d/transact conn [{:chat/message message}]))
 
 (defn all-chat-messages []
   (d/q '[:find [(pull ?e [:chat/message]) ...]

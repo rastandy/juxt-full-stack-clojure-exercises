@@ -1,5 +1,6 @@
 (ns edge.chat
   (:require [yada.yada :as yada]
+            [selmer.parser :as selmer]
             [edge.events :as e]
             [manifold.stream :as ms]
             [clojure.tools.logging :as log]))
@@ -20,10 +21,23 @@
    {:methods
     {:get {:produces #{"text/event-stream"}
            :response (fn [ctx]
-                       (->> (edge.events/subscribe events)
+                       (->> (e/subscribe events)
                             (ms/map #(format "data: %s\n\n" (pr-str %)))))}}}))
 
+(defn chat-app []
+  (yada/resource
+   {:id :edge.resources/chat-app
+    :methods
+    {:get
+     {:produces "text/html"
+      :response
+      (fn [ctx] (selmer/render-file
+                 "chat-app.html"
+                 {:title "Edge Chat app"
+                  :ctx ctx
+                  }))}}}))
+
 (defn chat-routes [events]
-  ["/chat"
-   [["/form" (chat-form events)]
-    ["/messages" (chat-messages events)]]])
+  ["" [["/chat-app" (chat-app)]
+       ["/chat" [["/form" (chat-form events)]
+                 ["/messages" (chat-messages events)]]]]])

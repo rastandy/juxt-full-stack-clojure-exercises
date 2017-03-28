@@ -1,15 +1,15 @@
-;; Copyright © 2016, JUXT LTD.
+;; Copyright © 2016, 2017, JUXT LTD.
 
 (ns edge.main
   (:require
    [reagent.core :as r]
-   [edge.phonebook-app :as phonebook]))
+   [edge.chat-app :as chat]))
 
 (defn init []
   (enable-console-print!)
 
-  (when-let [section (. js/document (getElementById "phonebook"))]
+  (when-let [section (. js/document (getElementById "chat"))]
     (println "Phonebook")
-    (phonebook/init section))
+    (chat/init section))
 
   (println "Congratulations - your environment seems to be working"))

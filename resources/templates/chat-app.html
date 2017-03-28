@@ -1,0 +1,18 @@
+{% extends "_wrapper.html" %}
+
+{% block main %}
+
+<h1>Chat (Single Page App)</h1>
+
+
+<p>
+  You can see the source to this page here: {% source
+  resources/templates/chat-app.html %}, while the ClojureScript
+  source to the app is in {% source src/edge/chat_app.cljs %}.
+</p>
+
+<section id="chat">
+  <p>Initialising...</p>
+</section>
+
+{% endblock %}
