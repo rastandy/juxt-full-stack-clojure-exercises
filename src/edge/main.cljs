@@ -9,7 +9,7 @@
   (enable-console-print!)
 
   (when-let [section (. js/document (getElementById "chat"))]
-    (println "Phonebook")
+    (println "Chat")
     (chat/init section))
 
   (println "Congratulations - your environment seems to be working"))

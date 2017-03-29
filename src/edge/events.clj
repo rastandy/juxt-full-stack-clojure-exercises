@@ -23,10 +23,10 @@
   (map->Events {}))
 
 (defn get-events-bus [events-component]
-  (-> events-component :bus))
+  (:bus events-component))
 
-(defn publish [events-component event topic]
+(defn publish [events-component topic event]
   (bus/publish! (get-events-bus events-component) topic event))
 
-(defn subscribe [events]
-  (bus/subscribe (get-events-bus events) :chat))
+(defn subscribe [events topic]
+  (bus/subscribe (get-events-bus events) topic))

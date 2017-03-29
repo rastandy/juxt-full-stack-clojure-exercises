@@ -13,7 +13,7 @@
     {:post {:parameters {:form {:message String}}
             :consumes #{"application/x-www-form-urlencoded"}
             :response (fn [ctx]
-                        (e/publish events (get-in ctx [:parameters :form :message]) :chat)
+                        (e/publish events :chat (get-in ctx [:parameters :form :message]))
                         "done")}}}))
 
 (defn chat-messages [events]
@@ -21,7 +21,7 @@
    {:methods
     {:get {:produces #{"text/event-stream"}
            :response (fn [ctx]
-                       (->> (e/subscribe events)
+                       (->> (e/subscribe events :chat)
                             (ms/map #(format "data: %s\n\n" (str %)))))}}}))
 
 (defn chat-app []
