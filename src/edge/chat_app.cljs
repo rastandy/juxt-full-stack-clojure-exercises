@@ -24,11 +24,6 @@
                 (read-string evt.currentTarget.responseText))))
       (.send)))
 
-(defn needs-saving? [state]
-  (when-let [db-entry (get (:phonebook state)
-                           (first (:current state)))]
-    (not= (second (:current state)) db-entry)))
-
 (defn changer [path]
   (fn [ev]
     (swap! app-state assoc-in path (.-value (.-target ev)))))

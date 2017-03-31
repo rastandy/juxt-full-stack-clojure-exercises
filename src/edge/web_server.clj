@@ -120,8 +120,8 @@
     (if listener
       component ; idempotence
       (let [vhosts-model (vhosts-model [{:scheme :http :host host}
-                                        (routes db {:port port
-                                                    :events (:events component)})])
+                                        (routes db (select-keys component
+                                                                [:port :events]))])
             listener (yada/listener vhosts-model {:port port})]
         (infof "Started web-server on port %s" (:port listener))
         (assoc component :listener listener))))

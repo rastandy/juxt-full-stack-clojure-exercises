@@ -22,8 +22,7 @@
 (defn new-events []
   (map->Events {}))
 
-(defn get-events-bus [events-component]
-  (:bus events-component))
+(def get-events-bus :bus)
 
 (defn publish [events-component topic event]
   (bus/publish! (get-events-bus events-component) topic event))
