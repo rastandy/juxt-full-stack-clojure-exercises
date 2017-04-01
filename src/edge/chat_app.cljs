@@ -14,7 +14,7 @@
   (println "Loading chat data")
   (doto
       (new js/XMLHttpRequest)
-      (.open "GET" "/chat/messages")
+      (.open "GET" "/chat")
       (.setRequestHeader "Accept" "application/edn")
       (.addEventListener
        "load"
@@ -43,7 +43,7 @@
   ;; (get-chat-data)
 
   (println "Subscribing")
-  (let [es (new js/EventSource "/chat/messages")]
+  (let [es (new js/EventSource "/chat")]
     (.addEventListener
      es "message"
      (fn [ev]

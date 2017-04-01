@@ -51,8 +51,12 @@
     ;; ["/chat" (yada/as-resource {:fruit "apple"})]
     (other-hello-routes)
     (chat-routes (:events config))
-    ["/chatapi" (yada/swaggered (chat-routes (:events config))
-                               {:basePath "/chatapi"})]
+    ["/chatapi" (-> (chat-routes (:events config))
+                    (yada/swaggered {:title "Chat API"
+                                     :version "1.0"
+                                     :description "A chat API"
+                                     :basePath "/chatapi"})
+                    (tag :edge.resources/chatapi))]
     (phonebook-routes db config)
     (phonebook-app-routes db config)
 

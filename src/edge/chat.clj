@@ -5,7 +5,7 @@
             [manifold.stream :as ms]
             [clojure.tools.logging :as log]))
 
-(defn chat-form [events]
+(defn chat [events]
   (yada/resource
    {:id :edge.resources/chat-form
     :description "A form to accept chat messages"
@@ -14,12 +14,8 @@
             :consumes #{"application/x-www-form-urlencoded"}
             :response (fn [ctx]
                         (e/publish events :chat (get-in ctx [:parameters :form :message]))
-                        "done")}}}))
-
-(defn chat-messages [events]
-  (yada/resource
-   {:methods
-    {:get {:produces #{"text/event-stream"}
+                        "done")}
+     :get {:produces #{"text/event-stream"}
            :response (fn [ctx]
                        (->> (e/subscribe events :chat)
                             (ms/map #(format "data: %s\n\n" (str %)))))}}}))
@@ -36,5 +32,4 @@
 
 (defn chat-routes [events]
   ["/" [["chat-app" (chat-app)]
-        ["chat" [["/form" (chat-form events)]
-                 ["/messages" (chat-messages events)]]]]])
+        ["chat" (chat events)]]])
