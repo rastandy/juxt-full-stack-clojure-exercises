@@ -52,9 +52,9 @@
     (other-hello-routes)
     (chat-routes (:events config))
     ["/chatapi" (-> (chat-routes (:events config))
-                    (yada/swaggered {:title "Chat API"
-                                     :version "1.0"
-                                     :description "A chat API"
+                    (yada/swaggered {:info {:title "Chat API"
+                                            :version "1.0"
+                                            :description "A chat API"}
                                      :basePath "/chatapi"})
                     (tag :edge.resources/chatapi))]
     (phonebook-routes db config)

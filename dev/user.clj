@@ -72,7 +72,8 @@
 
 (d/transact conn [{:db/ident :chat/message
                    :db/valueType :db.type/string
-                   :db/cardinality :db.cardinality/one}])
+                   :db/cardinality :db.cardinality/one
+                   :db/doc "A chat message"}])
 
 (defn chat [message]
   (d/transact conn [{:chat/message message}]))
@@ -83,7 +84,7 @@
        (d/db conn)))
 
 (defn all-datomic-relations []
- (d/q '[:find [(pull ?e [*]) ...]
-        :where
-        [?e :db/ident]]
-      (d/db conn)))
+  (d/q '[:find [(pull ?e [*]) ...]
+         :where
+         [?e :db/ident]]
+       (d/db conn)))

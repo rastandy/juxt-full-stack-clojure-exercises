@@ -7,7 +7,7 @@
 
 (defn chat [events]
   (yada/resource
-   {:id :edge.resources/chat-form
+   {:id :edge.resources/chat
     :description "A form to accept chat messages"
     :methods
     {:post {:parameters {:form {:message String}}

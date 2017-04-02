@@ -20,13 +20,9 @@
        "load"
        (fn [evt]
          (swap! app-state
-                assoc :chat
+                assoc :messages
                 (read-string evt.currentTarget.responseText))))
       (.send)))
-
-(defn changer [path]
-  (fn [ev]
-    (swap! app-state assoc-in path (.-value (.-target ev)))))
 
 (defn chat []
   (fn []
@@ -47,6 +43,6 @@
     (.addEventListener
      es "message"
      (fn [ev]
-       (swap! app-state update-in [:messages] conj (.-data ev)))))
+       (swap! app-state update :messages conj (.-data ev)))))
 
   (r/render-component [chat] section))
